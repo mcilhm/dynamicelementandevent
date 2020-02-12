@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+</head>
+<body onload="init()">
+    <div>
+        Data : [<span id="datas"></span>]
+    </div>
+    <br>
+</body>
+
+<script>
+    let data = [];
+    let spanData = document.getElementById("datas");
+    spanData.innerHTML = data.toString();
+
+    Array.prototype.remove = function() {
+        var what, a = arguments, L = a.length, ax;
+        while (L && this.length) {
+            what = a[--L];
+            while ((ax = this.indexOf(what)) !== -1) {
+                this.splice(ax, 1);
+            }
+        }
+        return this;
+    };
+
+    function init() {
+        var x = document.createElement("div");
+        for (let index = 0; index < 5; index++) {
+            let checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "checkbox-" + index;
+            checkbox.value = "checkbox-" + index;
+            checkbox.id = "checkbox-" + index;
+            checkbox.className = "checkbox";
+
+            // creating label for checkbox
+            var label = document.createElement('label');
+
+            // assigning attributes for
+            // the created label tag
+            label.htmlFor = "checkbox-" + index;
+
+            // appending the created text to
+            // the created label tag
+            label.appendChild(document.createTextNode("checkbox-" + index));
+            x.appendChild(checkbox);
+            x.appendChild(label);
+
+            (function(value){
+                checkbox.addEventListener("click", function() {
+                    if(checkbox.checked) {
+                        data.push(value)
+                        spanData.innerHTML = data.toString();
+                    }
+                    else {
+                        data.remove(value);
+                        spanData.innerHTML = data.toString();
+                    }
+            }, false);})(checkbox.value);
+        }
+        document.body.appendChild(x);
+    }    
+
+</script>
+</html>
